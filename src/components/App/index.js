@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
 
-import { podio } from '../../utils/podio';
 import { login } from '../../apis/auth';
 
-export default class App extends Component {
-  state = {
-    loggedIn: false,
-  };
-
+class App extends Component {
   componentDidMount() {
-    podio.isAuthenticated()
-      .then(() => {this.setState({loggedIn: true}); console.log('login in')})
-      .catch(() => console.log('error'))
+    window.addEventListener('message', this.handleAuthCompleted, false);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('message', this.handleAuthCompleted);
+  }
+
+  handleAuthCompleted = event => {
+    const { sessionStore } = this.props;
+    sessionStore.setAuth(event.data);
+  };
+
   render() {
+    const { sessionStore } = this.props;
+
     return (
       <div className="App">
-        <a onClick={login}>login</a>
-        {this.state.loggedIn ? <div>logged in</div> : null}
+        {sessionStore.auth ? <div>logged in</div> :
+          <button onClick={login}>login</button>}
       </div>
     );
   }
 }
+
+export default inject(
+  'sessionStore'
+)(observer(App));

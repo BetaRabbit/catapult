@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
+
+import { REDIRECT_URL } from '../../constants/auth';
 import { podio } from '../../utils/podio';
 
 export default class AuthPopup extends Component {
   componentDidMount() {
     podio.isAuthenticated().then(() => {
-      podio.refreshAuthFromStore();
+      window.close();
+    }).catch(e => {
+      console.error(e);
+      window.location = podio.getAuthorizationURL(REDIRECT_URL);
     });
-
-    window.close();
   }
 
   render() {
-    return <div>You are logged in.</div>
+    return <div>No Content!</div>
   }
 }
