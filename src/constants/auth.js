@@ -1,4 +1,5 @@
-export const IS_DEV = process.env.NODE_ENV === 'development';
+export const IS_DEV = process.env.NODE_ENV !== 'production' &&
+  process.env.REACT_APP_ENV_TEST !== 'true';
 
 export const AUTH_TYPE = 'client';
 
