@@ -13,18 +13,18 @@ class UserStore {
     });
   }
 
-  getUserProfile = action('get-user-profile', () => {
+  getUserStatus = action('get-user-status', () => {
     const { profile } = this;
 
     profile.loading = true;
 
-    userApi.getUserProfile()
-      .then(action('get-user-profile-success', data => {
-        profile.data = data;
+    userApi.getUserStatus()
+      .then(action('get-user-status-success', data => {
+        profile.data = data.profile;
         profile.loading = false;
         profile.error = null;
       }))
-      .catch(action('get-user-profile-failure', e => {
+      .catch(action('get-user-status-failure', e => {
         profile.data = null;
         profile.loading = false;
         profile.error = e;

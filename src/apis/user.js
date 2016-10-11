@@ -1,7 +1,7 @@
 import { podio } from '../utils/podio';
 
-const USER_PROFILE_URL = '/user/profile';
+const USER_STATUS_URL = '/user/status';
 
-export function getUserProfile() {
-  return podio.request('get', USER_PROFILE_URL);
+export function getUserStatus() {
+  return podio.request('get', USER_STATUS_URL);
 }

@@ -13,7 +13,7 @@ class App extends Component {
     // if user already logged in, retain auth object from session manager
     podio.isAuthenticated().then(() => {
       sessionManager.get(AUTH_TYPE, auth => sessionStore.setAuth(auth));
-      userStore.getUserProfile();
+      userStore.getUserStatus();
     }).catch(e => console.log('unauthenticated'));
 
     window.addEventListener('message', this.handleAuthCompleted, false);
@@ -30,7 +30,7 @@ class App extends Component {
       sessionStore.setAuth(event.data)
     );
 
-    userStore.getUserProfile();
+    userStore.getUserStatus();
   };
 
   renderUser() {
