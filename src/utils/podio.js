@@ -11,6 +11,7 @@ export const podio = new api({
   onTokenWillRefresh: onTokenWillRefresh,
 });
 
-export function onTokenWillRefresh() {
+function onTokenWillRefresh(callback) {
   login();
+  callback();
 }

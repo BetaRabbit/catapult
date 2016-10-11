@@ -14,7 +14,7 @@ class App extends Component {
     podio.isAuthenticated().then(() => {
       sessionManager.get(AUTH_TYPE, auth => sessionStore.setAuth(auth));
       userStore.getUserProfile();
-    }).catch(e => console.log(e));
+    }).catch(e => console.log('unauthenticated'));
 
     window.addEventListener('message', this.handleAuthCompleted, false);
   }
@@ -25,7 +25,11 @@ class App extends Component {
 
   handleAuthCompleted = event => {
     const { sessionStore, userStore } = this.props;
-    sessionStore.setAuth(event.data);
+
+    podio.refreshAuthFromStore(() =>
+      sessionStore.setAuth(event.data)
+    );
+
     userStore.getUserProfile();
   };
 
